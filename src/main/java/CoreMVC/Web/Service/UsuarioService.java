@@ -1,9 +1,12 @@
 package CoreMVC.Web.Service;
 
 import CoreMVC.Web.Document.Usuario;
+import CoreMVC.Web.JWT.JwtUtil;
 import CoreMVC.Web.Repository.UsuarioRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -11,21 +14,27 @@ import java.util.Date;
 @Service
 public class UsuarioService {
 
-    private UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, JwtUtil jwtUtil) {
         this.usuarioRepository = usuarioRepository;
+        this.jwtUtil = jwtUtil;
     }
 
     /**
      * Método para loguear un usuario en el sistema
      * @param email
      * @param contrasenia
-     * @return boolean, verdadero si el usuario existe, falso si no
+     * @return ResponseEntity con el token JWT si el login es exitoso, o un mensaje de error si no lo es
      */
-    public boolean login(String email, String contrasenia) {
-        return usuarioRepository.findUsuarioByEmailAndContrasenia(email, contrasenia).isPresent();
+    public ResponseEntity<String> login(String email, String contrasenia) {
+        Usuario usuarioLogueado = usuarioRepository.findUsuarioByEmailAndContrasenia(email, contrasenia).orElse(null);
+        if (usuarioLogueado != null) {
+            return ResponseEntity.ok(jwtUtil.generateToken(usuarioLogueado.getIdUsuario().toString()));
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Email o contraseña incorrectos");
     }
 
     /**

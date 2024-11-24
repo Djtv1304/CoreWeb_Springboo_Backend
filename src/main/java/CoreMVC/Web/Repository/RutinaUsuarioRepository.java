@@ -27,23 +27,4 @@ public interface RutinaUsuarioRepository extends MongoRepository<RutinaUsuario, 
 
     ArrayList<RutinaUsuario> findRutinaUsuarioByIdUsuario(@NonNull String idUsuario);
 
-    ArrayList<RutinaUsuario> findRutinaUsuarioByFechaBetween(@NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByIdUsuarioAndFechaBetween(@NonNull String idUsuario, @NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByFechaBetweenOrderByFechaAsc(@NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByIdUsuarioAndFechaBetweenOrderByFechaAsc(@NonNull String idUsuario, @NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByFechaBetweenOrderByFechaDesc(@NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByIdUsuarioAndFechaBetweenOrderByFechaDesc(@NonNull String idUsuario, @NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByFechaBetweenOrderByKilometrajeAsc(@NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByIdUsuarioAndFechaBetweenOrderByKilometrajeAsc(@NonNull String idUsuario, @NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByFechaBetweenOrderByKilometrajeDesc(@NonNull Date fechaInicio, @NonNull Date fechaFin);
-
-    ArrayList<RutinaUsuario> findRutinaUsuarioByIdUsuarioAndFechaBetweenOrderByKilometrajeDesc(@NonNull String idUsuario, @NonNull Date fechaInicio, @NonNull Date fechaFin);
 }
