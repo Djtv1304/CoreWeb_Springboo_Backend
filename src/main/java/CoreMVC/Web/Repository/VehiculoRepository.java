@@ -16,7 +16,7 @@ public interface VehiculoRepository extends MongoRepository<Vehiculo, String> {
 
     @Override
     @NonNull
-    Vehiculo save(@NonNull Vehiculo entity);
+    <S extends Vehiculo> S save(@NonNull S entity);
 
     @Override
     void deleteById(@NonNull String s);

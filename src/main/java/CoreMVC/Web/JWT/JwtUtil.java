@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.security.Key;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Date;
 
@@ -51,6 +52,10 @@ public class JwtUtil {
             throw new IllegalArgumentException("Token JWT no confiable", e);
         }
 
+    }
+
+    public String refineJwtToken(String token) {
+        return token.replace("Bearer ", "").trim();
     }
 }
 
