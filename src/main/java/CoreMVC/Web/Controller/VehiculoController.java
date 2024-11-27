@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/vehiculo")
+@CrossOrigin(origins = "*", methods= {RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 public class VehiculoController {
 
     private final VehiculoService vehiculoService;
@@ -18,14 +19,14 @@ public class VehiculoController {
         this.vehiculoService = vehiculoService;
     }
 
+    @GetMapping("/obtenerVehiculosPorUsuario")
+    public ResponseEntity<?> obtenerVehiculosPorUsuario(@RequestHeader("Authorization") String tokenJWT) {
+        return vehiculoService.getVehiculos(tokenJWT);
+    }
+
     @PostMapping("/registrar")
     public ResponseEntity<?> registrarVehiculo(@RequestBody Vehiculo newVehiculo, @RequestHeader("Authorization") String tokenJWT) {
         return vehiculoService.registrarVehiculo(newVehiculo, tokenJWT);
-    }
-
-    @PostMapping("/eliminar/{idVehiculo}")
-    public void eliminarVehiculo(@PathVariable String idVehiculo) {
-        vehiculoService.deleteById(idVehiculo);
     }
 
     @PostMapping("/actualizar")

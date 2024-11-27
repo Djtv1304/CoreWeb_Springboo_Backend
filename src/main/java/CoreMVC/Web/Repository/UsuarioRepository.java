@@ -3,6 +3,7 @@ package CoreMVC.Web.Repository;
 import CoreMVC.Web.Document.Usuario;
 import com.mongodb.lang.NonNull;
 import com.mongodb.lang.NonNullApi;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,8 @@ public interface UsuarioRepository extends MongoRepository<Usuario, String> {
     @Override
     @NonNull
     Optional<Usuario> findById(@NonNull String idUsuario);
+
+    Usuario findUsuarioByIdUsuario(ObjectId idUsuario);
 
     Usuario findUsuarioByEmail(@NonNull String email);
 

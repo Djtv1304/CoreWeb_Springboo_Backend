@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Duration;
@@ -48,5 +49,7 @@ public class Vehiculo {
 
     // URL de la imagen del vehículo.
     private String imageURL;
+
+    private double promedioRendimiento;
 
 }

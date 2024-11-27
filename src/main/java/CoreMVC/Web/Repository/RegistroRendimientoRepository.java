@@ -2,10 +2,12 @@ package CoreMVC.Web.Repository;
 
 import CoreMVC.Web.Document.RegistroRendimiento;
 import lombok.NonNull;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 public interface RegistroRendimientoRepository extends MongoRepository<RegistroRendimiento, String> {
@@ -13,6 +15,8 @@ public interface RegistroRendimientoRepository extends MongoRepository<RegistroR
     @Override
     @NonNull
     ArrayList<RegistroRendimiento> findAll();
+
+    ArrayList<RegistroRendimiento> findAllByIdVehiculo(ObjectId idVehiculo);
 
     @Override
     @NonNull
