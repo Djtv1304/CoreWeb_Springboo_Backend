@@ -50,6 +50,9 @@ public class Vehiculo {
     // URL de la imagen del vehículo.
     private String imageURL;
 
+    // Verificar estos atributos en el formulario del FrontEnd.
     private double promedioRendimiento;
+
+    private double precio;
 
 }

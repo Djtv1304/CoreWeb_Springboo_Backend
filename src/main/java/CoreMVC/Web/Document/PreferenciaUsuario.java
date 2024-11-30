@@ -5,10 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Document(collection = "PreferenciaUsuario")
 public class PreferenciaUsuario {
 
     @Id
@@ -16,7 +18,7 @@ public class PreferenciaUsuario {
 
     private ObjectId idUsuario;
 
-    private String clasificacionVeiculo;
+    private String clasificacionVehiculo;
 
     private double presupuesto;
 

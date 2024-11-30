@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface VehiculoRepository extends MongoRepository<Vehiculo, ObjectId> {
+public interface VehiculoRepository extends MongoRepository<Vehiculo, ObjectId>, VehiculoRepositoryCustom {
 
     @Override
     @NonNull
@@ -22,6 +22,8 @@ public interface VehiculoRepository extends MongoRepository<Vehiculo, ObjectId> 
     Optional<Vehiculo> findById(@NonNull ObjectId objectId);
 
     ArrayList<Vehiculo> findAllByIdUsuario(ObjectId idUsuario);
+
+    ArrayList<Vehiculo> findByClasificacionAndPrecio(String clasificacion, double precio);
 
     @Override
     @NonNull
@@ -36,6 +38,5 @@ public interface VehiculoRepository extends MongoRepository<Vehiculo, ObjectId> 
     ArrayList<Vehiculo> findVehiculoByAnio(@NonNull String anio);
 
     ArrayList<Vehiculo> findVehiculoByColor(@NonNull String color);
-
 
 }

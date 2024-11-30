@@ -2,9 +2,11 @@ package CoreMVC.Web.Repository;
 
 import CoreMVC.Web.Document.PreferenciaUsuario;
 import lombok.NonNull;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface PreferenciaUsuarioRepository extends MongoRepository<PreferenciaUsuario, String> {
@@ -16,6 +18,8 @@ public interface PreferenciaUsuarioRepository extends MongoRepository<Preferenci
     @Override
     @NonNull
     Optional<PreferenciaUsuario> findById(@NonNull String idPreferenciaUsuario);
+
+    PreferenciaUsuario findByIdUsuario(ObjectId idUsuario);
 
     @Override
     @NonNull

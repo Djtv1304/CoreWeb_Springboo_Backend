@@ -20,7 +20,7 @@ public class RutinaUsuarioController {
     @PostMapping("/save")
     public ResponseEntity<?> saveRutinaUsuario(@RequestBody RutinaUsuario rutinaUsuario, @RequestHeader("Authorization") String token) {
         String diaSemana = rutinaUsuario.getDiaSemana();
-        if (!diaSemana.matches("^(Lunes|Martes|Miércoles|Jueves|Viernes|Sábado|Domingo)$")) {
+        if (!diaSemana.matches("^(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$")) {
             return ResponseEntity.badRequest().body("El día de la semana no es válido");
         }
         return rutinaUsuarioService.saveRutinaUsuario(rutinaUsuario, token);

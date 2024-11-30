@@ -2,6 +2,7 @@ package CoreMVC.Web.Repository;
 
 import CoreMVC.Web.Document.RutinaUsuario;
 import lombok.NonNull;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.ArrayList;
@@ -25,6 +26,6 @@ public interface RutinaUsuarioRepository extends MongoRepository<RutinaUsuario, 
     @Override
     void deleteById(@NonNull String s);
 
-    ArrayList<RutinaUsuario> findRutinaUsuarioByIdUsuario(@NonNull String idUsuario);
+    ArrayList<RutinaUsuario> findRutinaUsuarioByIdUsuario(ObjectId idUsuario);
 
 }

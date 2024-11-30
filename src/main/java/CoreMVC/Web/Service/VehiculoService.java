@@ -3,7 +3,6 @@ package CoreMVC.Web.Service;
 import CoreMVC.Web.Document.Vehiculo;
 import CoreMVC.Web.JWT.JwtUtil;
 import CoreMVC.Web.Repository.VehiculoRepository;
-import org.apache.coyote.Response;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -68,6 +67,11 @@ public class VehiculoService {
 
     public Optional<Vehiculo> encontrarVehiculoById(String idVehiculo) {
         return vehiculoRepository.findById(new ObjectId(idVehiculo));
+    }
+
+    public ArrayList<Vehiculo> findByClasificacionAndPrecio(String clasificacion, double precio) {
+        System.out.println("Llame bien al metodo");
+        return vehiculoRepository.findByClasificacionAndPrecio(clasificacion, precio);
     }
 
 }
