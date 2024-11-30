@@ -4,14 +4,14 @@ import CoreMVC.Web.Document.Vehiculo;
 import lombok.NonNull;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface VehiculoRepository extends MongoRepository<Vehiculo, ObjectId>, VehiculoRepositoryCustom {
+public interface VehiculoRepository extends MongoRepository<Vehiculo, ObjectId> {
 
     @Override
     @NonNull
@@ -23,7 +23,10 @@ public interface VehiculoRepository extends MongoRepository<Vehiculo, ObjectId>,
 
     ArrayList<Vehiculo> findAllByIdUsuario(ObjectId idUsuario);
 
-    ArrayList<Vehiculo> findByClasificacionAndPrecio(String clasificacion, double precio);
+    @Query("{ 'clasificacion': ?0, 'precio': { $gte: ?1, $lte: ?2 } }")
+    ArrayList<Vehiculo> findByClasificacionAndPrecioBetween(String clasificacion, double precioAfter, double precioBefore);
+
+    ArrayList<Vehiculo> findByClasificacionAndPrecioLessThanEqual(String clasificacion, double precioIsLessThan);
 
     @Override
     @NonNull

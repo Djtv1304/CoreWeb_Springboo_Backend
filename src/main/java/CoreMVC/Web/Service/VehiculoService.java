@@ -69,9 +69,12 @@ public class VehiculoService {
         return vehiculoRepository.findById(new ObjectId(idVehiculo));
     }
 
-    public ArrayList<Vehiculo> findByClasificacionAndPrecio(String clasificacion, double precio) {
-        System.out.println("Llame bien al metodo");
-        return vehiculoRepository.findByClasificacionAndPrecio(clasificacion, precio);
+    public ArrayList<Vehiculo> findByClasificacionAndPrecio(String clasificacion, double precioIsGreaterThan, double precioIsLessThan) {
+        return vehiculoRepository.findByClasificacionAndPrecioBetween(clasificacion, precioIsGreaterThan, precioIsLessThan);
+    }
+
+    public ArrayList<Vehiculo> findByClasificacionAndPrecioLessThanEqual(String clasificacion, double precioIsLessThan) {
+        return vehiculoRepository.findByClasificacionAndPrecioLessThanEqual(clasificacion, precioIsLessThan);
     }
 
 }

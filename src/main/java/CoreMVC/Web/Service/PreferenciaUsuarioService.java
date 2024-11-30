@@ -6,38 +6,32 @@ import CoreMVC.Web.Document.Vehiculo;
 import CoreMVC.Web.JWT.JwtUtil;
 import CoreMVC.Web.Repository.PreferenciaUsuarioRepository;
 import CoreMVC.Web.Repository.RutinaUsuarioRepository;
-import CoreMVC.Web.Repository.VehiculoRepository;
-import lombok.NonNull;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Optional;
+
 
 @Service
 public class PreferenciaUsuarioService {
 
     private final PreferenciaUsuarioRepository preferenciaUsuarioRepository;
 
-    private final RutinaUsuarioRepository rutinaUsuarioRepository;
-
     private final VehiculoService vehiculoService;
 
-    private final VehiculoRepository vehiculoRepository;
+    private final RutinaUsuarioRepository rutinaUsuarioRepository;
 
     private final JwtUtil jwtUtil;
 
     @Autowired
     public PreferenciaUsuarioService(PreferenciaUsuarioRepository preferenciaUsuarioRepository,
                                      JwtUtil jwtUtil, VehiculoService vehiculoService,
-                                     RutinaUsuarioRepository rutinaUsuarioRepository,
-                                     VehiculoRepository vehiculoRepository) {
+                                     RutinaUsuarioRepository rutinaUsuarioRepository) {
         this.preferenciaUsuarioRepository = preferenciaUsuarioRepository;
         this.jwtUtil = jwtUtil;
         this.vehiculoService = vehiculoService;
         this.rutinaUsuarioRepository = rutinaUsuarioRepository;
-        this.vehiculoRepository = vehiculoRepository;
     }
 
     public PreferenciaUsuario savePreferenciaUsuario(String token, PreferenciaUsuario preferenciaUsuario) {
@@ -52,20 +46,17 @@ public class PreferenciaUsuarioService {
 
         String refinedToken = jwtUtil.refineJwtToken(token);
         PreferenciaUsuario preferencia = preferenciaUsuarioRepository.findByIdUsuario(new ObjectId(jwtUtil.extractUserId(refinedToken)));
-        System.out.println("Preferencia: " + preferencia);
         ArrayList<RutinaUsuario> rutina = rutinaUsuarioRepository.findRutinaUsuarioByIdUsuario(new ObjectId(jwtUtil.extractUserId(refinedToken)));
-        System.out.println("Rutina: " + rutina.size());
 
         double totalKilometraje = rutina.stream().mapToDouble(r -> Double.parseDouble(r.getKilometrajeRecorrido())).sum();
-        System.out.println("Kilometraje: " + totalKilometraje);
         double presupuesto = preferencia.getPresupuesto();
-        System.out.println("Presupuesto: " + presupuesto);
         String clasificacion = preferencia.getClasificacionVehiculo();
-        System.out.println("Clasificacion: " + clasificacion);
 
-        double precio = presupuesto;
+        double precioMin = presupuesto - 5000;
+        double precioMax = presupuesto + 5000;
+        System.out.println("El precio debe ser mayor a " + precioMin + " y menor a " + precioMax);
 
-        ArrayList<Vehiculo> vehiculos = vehiculoRepository.findByClasificacionAndPrecio(clasificacion, precio);
+        ArrayList<Vehiculo> vehiculos = vehiculoService.findByClasificacionAndPrecio(clasificacion, precioMin, precioMax);
 
         Vehiculo mejorVehiculo = null;
         double mejorEficiencia = Double.MAX_VALUE;
@@ -82,4 +73,36 @@ public class PreferenciaUsuarioService {
 
         return mejorVehiculo;
     }
+
+
+    public ArrayList<Vehiculo> recomendarVehiculoPorPresupuesto(String token) {
+
+        String refinedToken = jwtUtil.refineJwtToken(token);
+        PreferenciaUsuario preferencia = preferenciaUsuarioRepository.findByIdUsuario(new ObjectId(jwtUtil.extractUserId(refinedToken)));
+        ArrayList<RutinaUsuario> rutina = rutinaUsuarioRepository.findRutinaUsuarioByIdUsuario(new ObjectId(jwtUtil.extractUserId(refinedToken)));
+
+        double totalKilometraje = rutina.stream().mapToDouble(r -> Double.parseDouble(r.getKilometrajeRecorrido())).sum();
+        System.out.println("Total Kilometraje: " + totalKilometraje);
+        double presupuesto = preferencia.getPresupuesto();
+        String clasificacion = preferencia.getClasificacionVehiculo();
+
+        System.out.println("El precio debe ser menor a " + presupuesto);
+
+        ArrayList<Vehiculo> vehiculos = vehiculoService.findByClasificacionAndPrecioLessThanEqual(clasificacion, presupuesto);
+
+        ArrayList<Vehiculo> vehiculosRecomendados = new ArrayList<>();
+        double mejorEficiencia = Double.MAX_VALUE;
+        System.out.println("Vehiculos: " + vehiculos.size());
+
+        for (Vehiculo vehiculo : vehiculos) {
+            double eficiencia = totalKilometraje / Double.parseDouble(vehiculo.getAutonomia());
+            if (eficiencia < mejorEficiencia) {
+                mejorEficiencia = eficiencia;
+                vehiculosRecomendados.add(vehiculo);
+            }
+        }
+
+        return vehiculosRecomendados;
+    }
+
 }
