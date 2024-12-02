@@ -22,6 +22,9 @@ public class PreferenciaUsuarioController {
     @PostMapping("/save")
     public ResponseEntity<?> savePreferenciaUsuario(@RequestHeader("Authorization") String token, @RequestBody PreferenciaUsuario newPreferenciaUsuario) {
         try {
+
+
+
             return ResponseEntity.status(HttpStatus.CREATED).body(preferenciaUsuarioService.savePreferenciaUsuario(token, newPreferenciaUsuario));
         } catch (Exception e) {
             System.out.println("Error al guardar preferencia de usuario: " + e.getMessage());

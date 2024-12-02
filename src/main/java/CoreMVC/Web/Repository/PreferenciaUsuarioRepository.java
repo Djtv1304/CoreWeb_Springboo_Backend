@@ -28,7 +28,7 @@ public interface PreferenciaUsuarioRepository extends MongoRepository<Preferenci
     @Override
     void deleteById(@NonNull String s);
 
-    PreferenciaUsuario findPreferenciaUsuarioByIdUsuario(@NonNull String idUsuario);
+    ArrayList<PreferenciaUsuario> findAllByIdUsuario(ObjectId idUsuario);
 
     @Override
     void deleteAll();

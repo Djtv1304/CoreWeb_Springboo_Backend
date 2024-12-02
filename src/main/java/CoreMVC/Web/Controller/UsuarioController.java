@@ -29,6 +29,9 @@ public class UsuarioController {
 
     @PostMapping("/registrar")
     public String registrarUsuario(@RequestBody Usuario newUsuario) {
+        if (!newUsuario.getEmail().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+            return "El formato del email no es válido";
+        }
         return usuarioService.registrarUsuario(
                 newUsuario.getEmail(),
                 newUsuario.getPrimerNombre(),

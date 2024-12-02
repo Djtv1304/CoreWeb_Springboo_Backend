@@ -8,8 +8,10 @@ import CoreMVC.Web.Repository.PreferenciaUsuarioRepository;
 import CoreMVC.Web.Repository.RutinaUsuarioRepository;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -40,6 +42,15 @@ public class PreferenciaUsuarioService {
         preferenciaUsuario.setIdUsuario(new ObjectId(jwtUtil.extractUserId(refinedToken)));
 
         return preferenciaUsuarioRepository.save(preferenciaUsuario);
+    }
+
+    public PreferenciaUsuario findById (String idPreferenciaUsuario) {
+        return preferenciaUsuarioRepository.findById(idPreferenciaUsuario).orElse(null);
+    }
+
+    public ResponseEntity<ArrayList<PreferenciaUsuario>> findAllPreferenciaUsuarioByIdUsuario(String token) {
+        String refinedToken = jwtUtil.refineJwtToken(token);
+        return ResponseEntity.ok(preferenciaUsuarioRepository.findAllByIdUsuario(new ObjectId(jwtUtil.extractUserId(refinedToken))));
     }
 
     public Vehiculo recomendarVehiculo(String token) {
@@ -73,7 +84,6 @@ public class PreferenciaUsuarioService {
 
         return mejorVehiculo;
     }
-
 
     public ArrayList<Vehiculo> recomendarVehiculoPorPresupuesto(String token) {
 
