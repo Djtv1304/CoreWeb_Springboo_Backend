@@ -82,6 +82,16 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<propertiesEncoding>UTF-8</propertiesEncoding>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>exe</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

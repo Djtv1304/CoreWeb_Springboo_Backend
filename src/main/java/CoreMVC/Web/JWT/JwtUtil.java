@@ -19,7 +19,7 @@ public class JwtUtil {
 
     // Clave secreta para firmar el token
     @Value("${jwt.secret.key}")
-    private String SECRET_KEY;;
+    private String SECRET_KEY;
 
     // Método para obtener la clave secreta para firmar el token
     private SecretKey getSigningKey() {
