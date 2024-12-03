@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>CoreMVC</groupId>
 	<artifactId>Web</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<name>Web</name>
 	<description>Core MVC Web Engineering</description>
 	<url/>
