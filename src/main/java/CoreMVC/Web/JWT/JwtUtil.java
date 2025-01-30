@@ -15,7 +15,7 @@ import java.util.Base64;
 import java.util.Date;
 
 @Component
-public class JwtUtil {
+public class JwtUtil implements IJwtUtil {
 
     // Clave secreta para firmar el token
     @Value("${jwt.secret.key}")
@@ -27,6 +27,7 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
+    @Override
     public String generateToken(String userId) {
         // Obtengo la clave secreta para firmar el token
         SecretKey key = getSigningKey();
@@ -38,6 +39,7 @@ public class JwtUtil {
                 .compact();
     }
 
+    @Override
     public String extractUserId(String token) {
         SecretKey key = getSigningKey();
         try {
@@ -51,9 +53,9 @@ public class JwtUtil {
             // No confiar en el JWT si la verificación falla
             throw new IllegalArgumentException("Token JWT no confiable", e);
         }
-
     }
 
+    @Override
     public String refineJwtToken(String token) {
         return token.replace("Bearer ", "").trim();
     }

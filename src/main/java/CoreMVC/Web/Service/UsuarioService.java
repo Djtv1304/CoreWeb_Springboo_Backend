@@ -1,6 +1,7 @@
 package CoreMVC.Web.Service;
 
 import CoreMVC.Web.Document.Usuario;
+import CoreMVC.Web.Factory.UsuarioFactory;
 import CoreMVC.Web.JWT.JwtUtil;
 import CoreMVC.Web.Repository.UsuarioRepository;
 import org.bson.types.ObjectId;
@@ -50,7 +51,8 @@ public class UsuarioService {
         if (usuarioRepository.findUsuarioByEmail(email) == null) {
             ObjectId idUsuario = new ObjectId();
 
-            usuarioRepository.save(new Usuario(idUsuario, email, primerNombre, apellido, contrasenia, fechaNacimiento, new Date()));
+            Usuario nuevoUsuario = UsuarioFactory.createUsuario(idUsuario, email, primerNombre, apellido, contrasenia, fechaNacimiento);
+            usuarioRepository.save(nuevoUsuario);
 
             return "Usuario registrado correctamente";
         }

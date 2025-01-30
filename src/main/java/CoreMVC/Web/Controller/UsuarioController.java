@@ -1,6 +1,7 @@
 package CoreMVC.Web.Controller;
 
 import CoreMVC.Web.Document.Usuario;
+import CoreMVC.Web.Service.AutenticacionService;
 import CoreMVC.Web.Service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +16,18 @@ import java.util.Date;
 @RequestMapping("/usuario")
 public class UsuarioController {
 
+    private final AutenticacionService autenticacionService;
     private final UsuarioService usuarioService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(AutenticacionService autenticacionService, UsuarioService usuarioService) {
+        this.autenticacionService = autenticacionService;
         this.usuarioService = usuarioService;
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Usuario usuarioToLogin) {
-        return usuarioService.login(usuarioToLogin.getEmail(), usuarioToLogin.getContrasenia());
+        return autenticacionService.login(usuarioToLogin.getEmail(), usuarioToLogin.getContrasenia());
     }
 
     @PostMapping("/registrar")

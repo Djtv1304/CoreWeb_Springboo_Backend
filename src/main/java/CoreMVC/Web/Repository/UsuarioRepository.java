@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UsuarioRepository extends MongoRepository<Usuario, String> {
+public interface UsuarioRepository extends MongoRepository<Usuario, String>, IUsuarioRepository {
 
     @Override
     @NonNull
